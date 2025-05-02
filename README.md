@@ -1,54 +1,45 @@
-# React + TypeScript + Vite
+# 🚀 TrailSteps - Chrome Extension
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**TrailSteps** is a Chrome Extension that captures every interaction you perform on a website, turns them into editable steps in a sidebar panel, and lets you export them as a structured PDF.  
+Think of it as a lightweight, open-source alternative to [Tango](https://app.tango.us).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧠 Features
 
-## Expanding the ESLint configuration
+- 📌 Tracks all clicks and interactions across any website
+- 📝 Displays recorded steps in a clean sidebar UI (built with React + AntD)
+- 🧹 Edit, delete, or reorder steps before export
+- 📄 Submit to open a new PDF generation page
+- 🖨️ Download your step-by-step guide as a PDF
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🛠️ Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Ant Design](https://ant.design/)
+- [Chrome Extension Manifest V3](https://developer.chrome.com/docs/extensions/mv3/)
+- PDF Export using `html2canvas` + `jsPDF` or `html2pdf.js`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## 📁 Project Structure
+
+```text
+trailsteps/
+├── public/
+│   ├── pdf.html            # HTML entry for PDF React page
+│   └── icons/              # Extension icons
+├── src/
+│   ├── content/            # contentScript.ts - DOM tracking logic
+│   ├── background/         # background.ts - event routing & tab handling
+│   ├── sidepanel/          # React sidebar UI (Vite + AntD + Tailwind)
+│   ├── pdfview/            # React PDF view page for export
+│   └── manifest.json       # Chrome extension configuration
+├── vite.config.ts
+└── README.md
 ```
