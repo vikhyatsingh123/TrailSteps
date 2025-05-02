@@ -2,7 +2,7 @@
 	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
 		"baseUrl": ".",
-		"types": ["node"]
+		"types": ["node", "chrome", "vite/client"]
 	},
 	"include": ["src"],
 	"references": [{ "path": "./tsconfig.node.json" }],
