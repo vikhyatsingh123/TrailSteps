@@ -74,7 +74,7 @@ chrome.runtime.onUpdateAvailable.addListener(() => {
 	chrome.runtime.reload();
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab: any) => {
+chrome.contextMenus.onClicked.addListener((info, tab) => {
 	if (info.menuItemId === 'open-jeeves-dap') {
 		// This will open the panel in all the pages on the current window.
 		void chrome.sidePanel.open({ tabId: tab.id });
@@ -82,7 +82,7 @@ chrome.contextMenus.onClicked.addListener((info, tab: any) => {
 });
 
 // for capturing the screenshot, we need "host_permissions": ["<all_urls>"] in manifest.json file
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message, __, sendResponse) => {
 	if (message.type === 'captureScreenshot') {
 		chrome.tabs.captureVisibleTab({ format: 'png' }, (dataURI) => {
 			if (chrome.runtime.lastError) {
@@ -97,7 +97,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	}
 });
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message, __, sendResponse) => {
 	if (message.type === 'open_side_panel') {
 		chrome.sidePanel
 			.open({ tabId: message.tabId, windowId: message.windowId })
@@ -117,7 +117,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	}
 });
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message, __, sendResponse) => {
 	if (message.type === 'switchTab') {
 		chrome.tabs
 			.update(message.tabId, { active: true })
@@ -131,7 +131,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	}
 });
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message, __, sendResponse) => {
 	if (message.type === 'showAllTabList') {
 		chrome.windows.getCurrent({ populate: true }, (window) => {
 			const tabs = window.tabs || [];
