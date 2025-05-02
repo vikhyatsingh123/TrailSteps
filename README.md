@@ -43,3 +43,49 @@ trailsteps/
 ├── vite.config.ts
 └── README.md
 ```
+
+---
+
+
+## 🧪 Development Notes
+- Click tracking starts when the user clicks Start in the side panel.
+- Steps are stored in local extension state (Zustand, chrome.storage.local).
+- On submission, a new tab (pdf.html) opens and renders the tracked steps.
+- PDF can be generated using html2canvas + jsPDF or html2pdf.js.
+
+---
+
+## 📦 Load in Chrome
+1. Run yarn build
+2. Go to chrome://extensions
+3. Enable Developer Mode
+4. Click Load Unpacked
+5. Select the dist/ folder
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/yourusername/trailsteps.git
+cd trailsteps
+```
+
+### 2. Install dependencies
+```bash
+yarn install
+```
+
+### 3. Run in dev mode
+```bash
+yarn dev
+```
+
+### 4. Build for production
+```bash
+yarn build
+```
+
+
