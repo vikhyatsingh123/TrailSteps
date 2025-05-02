@@ -7,8 +7,13 @@ export default defineConfig({
 	build: {
 		rollupOptions: {
 			input: {
-				sidepanel: resolve(__dirname, 'index.html'),
+				panel: resolve(__dirname, 'public/panel.html'),
+				background: resolve(__dirname, 'src/side-panel/service-worker/index.ts'),
+				contentScript: resolve(__dirname, 'src/side-panel/content-script/index.ts'),
 				pdf: resolve(__dirname, 'public/pdf.html'),
+			},
+			output: {
+				entryFileNames: '[name].js',
 			},
 		},
 		outDir: 'dist',
