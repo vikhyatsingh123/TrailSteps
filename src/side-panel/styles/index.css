@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+.floating-control {
+	box-shadow: 0px 4px 26px 0px rgba(152, 132, 132, 0.25);
+	border-radius: 9999999px;
+}
+
+.collapse-element .ant-collapse-header {
+	padding: 6px 16px !important;
+}
+
+.collapse-element .ant-collapse-content-box {
+	padding: 0px 16px !important;
+}
+
+.primary-button:hover {
+	background-color: #469ab9 !important;
+	color: #fff !important;
+}

@@ -1,4 +1,4 @@
-import '../../styles/index.css';
+import '../styles/index.css';
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { Button, Col, Collapse, CollapseProps, Modal, Row, Tooltip, Typography } from 'antd';
