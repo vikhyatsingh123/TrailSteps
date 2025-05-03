@@ -92,7 +92,7 @@ class Recorder {
 				});
 			}
 			void this.recurse();
-		} catch (error: any) {
+		} catch (error) {
 			console.error('Error in Recorder.recurse:', error);
 			this.stop();
 		}
