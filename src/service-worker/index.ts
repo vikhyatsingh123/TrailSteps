@@ -13,7 +13,7 @@ chrome.runtime.onInstalled.addListener((details: chrome.runtime.InstalledDetails
 			console.error('[onInstalled] Error while setting panel behavior');
 		});
 		chrome.contextMenus.create({
-			id: 'open-jeeves-dap',
+			id: 'open-dap',
 			title: 'Open side panel',
 			contexts: ['all'],
 		});
@@ -31,7 +31,7 @@ chrome.runtime.onInstalled.addListener((details: chrome.runtime.InstalledDetails
 		});
 
 		chrome.contextMenus.create({
-			id: 'open-jeeves-dap',
+			id: 'open-dap',
 			title: 'Open side panel',
 			contexts: ['all'],
 		});
@@ -75,9 +75,9 @@ chrome.runtime.onUpdateAvailable.addListener(() => {
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-	if (info.menuItemId === 'open-jeeves-dap') {
+	if (info.menuItemId === 'open-dap') {
 		// This will open the panel in all the pages on the current window.
-		void chrome.sidePanel.open({ tabId: tab.id });
+		void chrome.sidePanel.open({ tabId: tab?.id ?? 1 });
 	}
 });
 

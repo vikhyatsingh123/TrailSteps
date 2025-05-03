@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener((request) => {
 	}
 });
 
-// this is for the case when the user clicks on the start recording button in Jeeves
+// this is for the case when the user clicks on the start recording button on webpage
 window.addEventListener('message', (event) => {
 	if (event.data.action === 'startRecording') {
 		Recorder.start();

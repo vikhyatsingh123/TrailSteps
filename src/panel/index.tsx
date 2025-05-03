@@ -32,7 +32,6 @@ const Panel: React.FC = () => {
 	const [selectedElement, setSelectedElement] = useState<IElementObject[]>([]);
 	const [isCapturing, setIsCapturing] = useState<boolean>(false);
 	const [isPaused, setIsPaused] = useState<boolean>(false);
-	const [redirectUrl, setRedirectUrl] = useState<string | undefined>('');
 	const [activeKey, setActiveKey] = useState<number | string[] | undefined>(undefined);
 
 	useEffect(() => {
@@ -106,32 +105,12 @@ const Panel: React.FC = () => {
 	};
 
 	const handleStart = async () => {
-		const getJeevesUrl = () => {
-			return new Promise((resolve) => {
-				chrome.storage.local.get('jeevesUrl', (data) => {
-					resolve(data.jeevesUrl);
-				});
-			});
-		};
-
-		const jeevesUrl = await getJeevesUrl();
-		setRedirectUrl(jeevesUrl as string);
-
-		if (jeevesUrl) {
-			setIsCapturing(true);
-			setIsPaused(false);
-			chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
-				void chrome.tabs.sendMessage(tab[0].id as number, { text: 'DapStart' });
-			});
-			return;
-		}
-		Modal.error({
-			title: 'Screen capture cannot be started from this page',
-			content: 'Please start from the Jeeves page',
-			centered: true,
-			width: 300,
-			okButtonProps: { className: 'primary-button bg-[#0386B5]' },
+		setIsCapturing(true);
+		setIsPaused(false);
+		chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
+			void chrome.tabs.sendMessage(tab[0].id as number, { text: 'DapStart' });
 		});
+		return;
 	};
 
 	const handleDeleteClick = (e: any, index: number) => {
@@ -195,17 +174,14 @@ const Panel: React.FC = () => {
 			void chrome.tabs.sendMessage(tabs[0].id as number, { text: 'DapStop' });
 		});
 
-		chrome.tabs.create(
-			{ url: `${_.isUndefined(redirectUrl) ? 'http://localhost:2000/' : redirectUrl}create-tipsheet` },
-			(tab) => {
-				// Wait until the new tab has fully loaded, then send the data
-				chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
-					if (tabId === tab.id && changeInfo.status === 'complete') {
-						void chrome.tabs.sendMessage(tabId, { action: 'sendFinalData', data: selectedElement });
-					}
-				});
-			},
-		);
+		chrome.tabs.create({ url: 'http://localhost:2000/create-tipsheet' }, (tab) => {
+			// Wait until the new tab has fully loaded, then send the data
+			chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+				if (tabId === tab.id && changeInfo.status === 'complete') {
+					void chrome.tabs.sendMessage(tabId, { action: 'sendFinalData', data: selectedElement });
+				}
+			});
+		});
 	};
 
 	const handleChange: CollapseProps['onChange'] = (key) => {
@@ -282,7 +258,7 @@ const Panel: React.FC = () => {
 					<div style={{ height: 'calc(100vh - 90px)' }} className='overflow-y-auto'>
 						{_.isEmpty(selectedElement) ? (
 							<div className='text-sm px-6 pt-4 text-gray-500'>
-								Click on the screen to capture the steps with Jeeves AI Tip Sheet
+								Click on the screen to capture the steps with TrailSteps
 							</div>
 						) : (
 							<Collapse
@@ -350,7 +326,7 @@ const Panel: React.FC = () => {
 				<div className='flex justify-center items-center h-[90vh] text-center pl-5 pr-6 '>
 					<div>
 						<Typography.Title level={4} className='!font-medium'>
-							Ready to capture a new Jeeves AI Tip Sheet?
+							Ready to capture your steps?
 						</Typography.Title>
 						<div className='text-base text-[#4e4d4d]'>Click on your screen to start capturing</div>
 						<Button
