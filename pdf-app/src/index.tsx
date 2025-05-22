@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import './styles/index.css';
+import Pdf from './components/Pdf';
+
 const App: React.FC = () => {
-	return (
-		<div>
-			<h1>Hello PDF App</h1>
-		</div>
-	);
+	return <Pdf />;
 };
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<App />);
