@@ -15,6 +15,16 @@ Think of it as a lightweight, open-source alternative to [Tango](https://app.tan
 
 ---
 
+## ✅ Use Cases
+
+- Creating tutorials and SOPs
+- QA/testing documentation
+- Internal process guides
+- Bug reproduction steps
+- Onboarding workflows
+
+---
+
 ## 🛠️ Tech Stack
 
 - [React](https://react.dev/)
