@@ -3,12 +3,15 @@ import _ from 'lodash';
 import React, { useMemo, useState } from 'react';
 
 import { IPdfDataToStore, usePdfActions, usePdfData, useShowPdfPreview } from '../store/PdfStore';
+import PdfLivePreview from './PdfLivePreview';
+import StepsContainer from './StepsContainer';
 
 const PdfContent: React.FC = () => {
 	const showPdfPreview = useShowPdfPreview();
 	const pdfData = usePdfData();
 	const { setPdfData } = usePdfActions();
 
+	const [openImageUploader, setOpenImageUploader] = useState<boolean>(false);
 	const [subtitle, setSubtitle] = useState<string>(pdfData?.subtitle ?? '');
 	const [description, setDescription] = useState<string>(pdfData?.description ?? '');
 
@@ -29,40 +32,53 @@ const PdfContent: React.FC = () => {
 	}, 500);
 
 	return (
-		<div className={'h-[calc(100vh-106px)] bg-[#F1F6FB] overflow-y-scroll pb-20 pt-7'} id='pdf-view-wrapper'>
-			{showPdfPreview ? (
-				<div className='min-h-full w-full px-6'>
-					<PdfLivePreview previewData={previewData} />
-				</div>
-			) : (
-				<div className='min-h-full px-6 pr-3 flex flex-col gap-6'>
-					<div className='pl-10'>
-						<div className='bg-[#fff] p-4 pr-6 pb-8 rounded-lg space-y-8'>
-							<Input.TextArea
-								showCount
-								rows={1}
-								maxLength={150}
-								placeholder='Add Overview (Optional)'
-								value={subtitle}
-								onBlur={() => debouncedHandleValuesChange('subtitle', subtitle)}
-								onChange={(e) => setSubtitle(e.target.value)}
-							/>
-							<Input.TextArea
-								showCount
-								rows={2}
-								maxLength={500}
-								className='bg-white'
-								placeholder='Description (Optional)'
-								value={description}
-								onBlur={() => debouncedHandleValuesChange('description', description)}
-								onChange={(e) => setDescription(e.target.value)}
-							/>
-						</div>
+		<>
+			<div className={'h-[calc(100vh-106px)] bg-[#F1F6FB] overflow-y-scroll pb-20 pt-7'} id='pdf-view-wrapper'>
+				{showPdfPreview ? (
+					<div className='min-h-full w-full px-6'>
+						<PdfLivePreview previewData={previewData} />
 					</div>
-					<StepsContainer setOpenImageUploader={setOpenImageUploader} />
-				</div>
-			)}
-		</div>
+				) : (
+					<div className='min-h-full px-6 pr-3 flex flex-col gap-6'>
+						<div className='pl-10'>
+							<div className='bg-[#fff] p-4 pr-6 pb-8 rounded-lg space-y-8'>
+								<Input.TextArea
+									showCount
+									rows={1}
+									maxLength={150}
+									placeholder='Add Overview (Optional)'
+									value={subtitle}
+									onBlur={() => debouncedHandleValuesChange('subtitle', subtitle)}
+									onChange={(e) => setSubtitle(e.target.value)}
+								/>
+								<Input.TextArea
+									showCount
+									rows={2}
+									maxLength={500}
+									className='bg-white'
+									placeholder='Description (Optional)'
+									value={description}
+									onBlur={() => debouncedHandleValuesChange('description', description)}
+									onChange={(e) => setDescription(e.target.value)}
+								/>
+							</div>
+						</div>
+						<StepsContainer setOpenImageUploader={setOpenImageUploader} />
+					</div>
+				)}
+			</div>
+			<AddImageModal
+				open={openImageUploader}
+				selectionMode='multiple'
+				onClose={() => setOpenImageUploader(false)}
+				isManualTipsheet={isManualTipsheet}
+				name={assetQuery?.data?.name ?? ''}
+				streamID={assetId}
+				assetType={assetQuery?.data?.asset_type as AssetTypeEnum}
+				onOk={handleSaveImage}
+				assetVersion={assetVersion}
+			/>
+		</>
 	);
 };
 
